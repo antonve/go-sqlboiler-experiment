@@ -11,14 +11,14 @@ import (
 )
 
 func ExampleQueries() {
-	// ctx := context.Background()
-
 	psql, err := sql.Open("pgx", "host=postgis user=root dbname=experiment password=hunter2 sslmode=disable")
 	if err != nil {
 		log.Fatalf("failed opening connection to postgres: %v", err)
 	}
 
 	runMigrations(psql)
+
+	// output:
 }
 
 func runMigrations(psql *sql.DB) {
@@ -28,7 +28,7 @@ func runMigrations(psql *sql.DB) {
 	}
 
 	m, err := migrate.NewWithDatabaseInstance(
-		"file://db/migrations",
+		"file://migrations",
 		"postgres",
 		driver,
 	)
@@ -38,7 +38,7 @@ func runMigrations(psql *sql.DB) {
 
 	err = m.Down()
 	if err != nil {
-		log.Fatalf("failed dropping database: %v", err)
+		log.Printf("failed dropping database: %v", err)
 	}
 
 	err = m.Up()
