@@ -2,3 +2,12 @@ output   = "models"
 wipe     = true
 no-tests = true
 add-enum-types = true
+
+[psql]
+dbname = "experiment"
+host = "postgis"
+port = "5432"
+user = "root"
+pass = "hunter2"
+sslmode = "disable"
+blacklist = ["spatial_ref_sys", "schema_migrations"]

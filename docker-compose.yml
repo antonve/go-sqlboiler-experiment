@@ -8,14 +8,6 @@ services:
       - .:/code
     working_dir: /code
     tty: true
-    environment:
-      PSQL_DBNAME: experiment
-      PSQL_HOST: postgis
-      PSQL_PORT: 5432
-      PSQL_USERL: root
-      PSQL_PASS: hunter2
-      PSQL_SSLMODE: disable
-      PSQL_BLACKLIST: '["spatial_ref_sys", "schema_migrations"]'
   postgis:
     image: postgis/postgis
     environment:
