@@ -3,8 +3,12 @@ package main_test
 //go:generate sqlboiler --wipe psql
 
 import (
+	"context"
 	"database/sql"
+	"fmt"
 	"log"
+
+	"github.com/antonve/go-sqlboiler-experiment/models"
 
 	"github.com/golang-migrate/migrate/v4"
 	"github.com/golang-migrate/migrate/v4/database/postgres"
@@ -20,9 +24,12 @@ func ExampleQueries() {
 
 	runMigrations(psql)
 
-	// boil.SetDB(psql)
+	ctx := context.Background()
+	restaurants, err := models.Restaurants().All(ctx, psql)
+	fmt.Print(restaurants)
 
 	// output:
+	// []
 }
 
 func runMigrations(psql *sql.DB) {
