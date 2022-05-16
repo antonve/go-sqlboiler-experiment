@@ -9,8 +9,8 @@ import (
 	"log"
 
 	"github.com/antonve/go-sqlboiler-experiment/models"
-	"github.com/paulmach/orb"
 	"github.com/volatiletech/sqlboiler/v4/boil"
+	"github.com/volatiletech/sqlboiler/v4/types/pgeo"
 
 	"github.com/golang-migrate/migrate/v4"
 	"github.com/golang-migrate/migrate/v4/database/postgres"
@@ -44,7 +44,7 @@ func ExampleQueries() {
 func createRestaurant(psql *sql.DB, name string, long, lat float64) int64 {
 	var r models.Restaurant
 	r.Name = name
-	r.Location = orb.Point{long, lat}
+	r.Location = pgeo.Point{X: long, Y: lat}
 
 	err := r.Insert(context.Background(), psql, boil.Infer())
 	if err != nil {

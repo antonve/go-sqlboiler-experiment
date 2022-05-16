@@ -18,6 +18,4 @@ blacklist = ["spatial_ref_sys", "schema_migrations", "geography_columns", "geome
     name = "location"
     udt_name = "geometry"
   [types.replace]
-    type = "orb.Point"
-  [types.imports]
-    third_party = ['"github.com/paulmach/orb"']
+    type = "pgeo.Point"

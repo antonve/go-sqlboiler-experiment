@@ -14,19 +14,19 @@ import (
 	"time"
 
 	"github.com/friendsofgo/errors"
-	"github.com/paulmach/orb"
 	"github.com/volatiletech/sqlboiler/v4/boil"
 	"github.com/volatiletech/sqlboiler/v4/queries"
 	"github.com/volatiletech/sqlboiler/v4/queries/qm"
 	"github.com/volatiletech/sqlboiler/v4/queries/qmhelper"
+	"github.com/volatiletech/sqlboiler/v4/types/pgeo"
 	"github.com/volatiletech/strmangle"
 )
 
 // Restaurant is an object representing the database table.
 type Restaurant struct {
-	ID       int64     `boil:"id" json:"id" toml:"id" yaml:"id"`
-	Name     string    `boil:"name" json:"name" toml:"name" yaml:"name"`
-	Location orb.Point `boil:"location" json:"location" toml:"location" yaml:"location"`
+	ID       int64      `boil:"id" json:"id" toml:"id" yaml:"id"`
+	Name     string     `boil:"name" json:"name" toml:"name" yaml:"name"`
+	Location pgeo.Point `boil:"location" json:"location" toml:"location" yaml:"location"`
 
 	R *restaurantR `boil:"-" json:"-" toml:"-" yaml:"-"`
 	L restaurantL  `boil:"-" json:"-" toml:"-" yaml:"-"`
@@ -100,35 +100,35 @@ func (w whereHelperstring) NIN(slice []string) qm.QueryMod {
 	return qm.WhereNotIn(fmt.Sprintf("%s NOT IN ?", w.field), values...)
 }
 
-type whereHelperorb_Point struct{ field string }
+type whereHelperpgeo_Point struct{ field string }
 
-func (w whereHelperorb_Point) EQ(x orb.Point) qm.QueryMod {
+func (w whereHelperpgeo_Point) EQ(x pgeo.Point) qm.QueryMod {
 	return qmhelper.Where(w.field, qmhelper.EQ, x)
 }
-func (w whereHelperorb_Point) NEQ(x orb.Point) qm.QueryMod {
+func (w whereHelperpgeo_Point) NEQ(x pgeo.Point) qm.QueryMod {
 	return qmhelper.Where(w.field, qmhelper.NEQ, x)
 }
-func (w whereHelperorb_Point) LT(x orb.Point) qm.QueryMod {
+func (w whereHelperpgeo_Point) LT(x pgeo.Point) qm.QueryMod {
 	return qmhelper.Where(w.field, qmhelper.LT, x)
 }
-func (w whereHelperorb_Point) LTE(x orb.Point) qm.QueryMod {
+func (w whereHelperpgeo_Point) LTE(x pgeo.Point) qm.QueryMod {
 	return qmhelper.Where(w.field, qmhelper.LTE, x)
 }
-func (w whereHelperorb_Point) GT(x orb.Point) qm.QueryMod {
+func (w whereHelperpgeo_Point) GT(x pgeo.Point) qm.QueryMod {
 	return qmhelper.Where(w.field, qmhelper.GT, x)
 }
-func (w whereHelperorb_Point) GTE(x orb.Point) qm.QueryMod {
+func (w whereHelperpgeo_Point) GTE(x pgeo.Point) qm.QueryMod {
 	return qmhelper.Where(w.field, qmhelper.GTE, x)
 }
 
 var RestaurantWhere = struct {
 	ID       whereHelperint64
 	Name     whereHelperstring
-	Location whereHelperorb_Point
+	Location whereHelperpgeo_Point
 }{
 	ID:       whereHelperint64{field: "\"restaurants\".\"id\""},
 	Name:     whereHelperstring{field: "\"restaurants\".\"name\""},
-	Location: whereHelperorb_Point{field: "\"restaurants\".\"location\""},
+	Location: whereHelperpgeo_Point{field: "\"restaurants\".\"location\""},
 }
 
 // RestaurantRels is where relationship names are stored.
