@@ -10,4 +10,14 @@ port = "5432"
 user = "root"
 pass = "hunter2"
 sslmode = "disable"
-blacklist = ["spatial_ref_sys", "schema_migrations"]
+blacklist = ["spatial_ref_sys", "schema_migrations", "geography_columns", "geometry_columns"]
+
+[[types]]
+
+  [types.match]
+    name = "location"
+    udt_name = "geometry"
+  [types.replace]
+    type = "orb.Point"
+  [types.imports]
+    third_party = ['"github.com/paulmach/orb"']
