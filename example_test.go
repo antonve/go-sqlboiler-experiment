@@ -1,5 +1,7 @@
 package main_test
 
+//go:generate sqlboiler --wipe psql
+
 import (
 	"database/sql"
 	"log"
@@ -17,6 +19,8 @@ func ExampleQueries() {
 	}
 
 	runMigrations(psql)
+
+	// boil.SetDB(psql)
 
 	// output:
 }

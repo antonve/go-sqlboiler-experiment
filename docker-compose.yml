@@ -1,7 +1,9 @@
 version: "3.9"
 services:
   dev:
-    image: golang:1.18
+    build:
+      context: ./
+      dockerfile: ./Dockerfile
     volumes:
       - .:/code
     working_dir: /code
